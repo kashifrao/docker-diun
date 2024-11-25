@@ -1,0 +1,49 @@
+services:
+  diun:
+    image: crazymax/diun:latest
+    command: serve
+    volumes:
+      - "./data:/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - "TZ=Europe/Paris"
+      - "DIUN_WATCH_WORKERS=20"
+      - "DIUN_WATCH_SCHEDULE=0 */6 * * *"
+      - "DIUN_WATCH_JITTER=30s"
+      - "DIUN_PROVIDERS_DOCKER=true"
+      - "DIUN_DB_PATH=diun.db"
+      - "DIUN_WATCH_FIRSTCHECKNOTIF=false"
+      - "DIUN_WATCH_RUNONSTARTUP=true"
+      - "DIUN_DEFAULTS_WATCHREPO=false"
+      - "DIUN_DEFAULTS_NOTIFYON=new,update"
+      - "DIUN_DEFAULTS_SORTTAGS=reverse"
+      - "DIUN_NOTIF_GOTIFY_ENDPOINT=http://gotify.foo.com"
+      - "DIUN_NOTIF_GOTIFY_TOKEN=Token123456"
+      - "DIUN_NOTIF_GOTIFY_PRIORITY=1"
+      - "DIUN_NOTIF_GOTIFY_TIMEOUT=10s"
+      - "DIUN_NOTIF_NTFY_ENDPOINT=https://ntfy.sh"
+      - "DIUN_NOTIF_NTFY_TOPIC=diun-acce65a0-b777-46f9-9a11-58c67d1579c4"
+      - "DIUN_NOTIF_NTFY_TAGS=whale"
+      - "DIUN_NOTIF_NTFY_TIMEOUT=10s"
+      - "DIUN_NOTIF_TELEGRAM_TOKEN=aabbccdd:11223344"
+      - "DIUN_NOTIF_TELEGRAM_CHATIDS=123456789,987654321"
+      - "DIUN_NOTIF_WEBHOOK_ENDPOINT=http://webhook.foo.com/sd54qad89azd5a"
+      - "DIUN_NOTIF_WEBHOOK_METHOD=GET"
+      - "DIUN_NOTIF_WEBHOOK_HEADERS_CONTENT-TYPE=application/json"
+      - "DIUN_NOTIF_WEBHOOK_HEADERS_AUTHORIZATION=Token123456"
+      - "DIUN_NOTIF_WEBHOOK_TIMEOUT=10s"
+      - "DIUN_REGOPTS_0_NAME=docker.io"
+      - "DIUN_REGOPTS_0_SELECTOR=image"
+      - "DIUN_REGOPTS_0_USERNAME=foo"
+      - "DIUN_REGOPTS_0_PASSWORD=bar"
+      - "DIUN_REGOPTS_1_NAME=registry.gitlab.com"
+      - "DIUN_REGOPTS_1_SELECTOR=image"
+      - "DIUN_REGOPTS_1_USERNAME=fii"
+      - "DIUN_REGOPTS_1_PASSWORD=bor"
+      - "DIUN_REGOPTS_1_TIMEOUT=20s"
+      - "PROVIDERS_KUBERNETES_TLSINSECURE=false"
+      - "PROVIDERS_KUBERNETES_NAMESPACES=default,production"
+    labels:
+      - "diun.enable=true"
+    restart: always
+    
