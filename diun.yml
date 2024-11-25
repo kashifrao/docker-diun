@@ -1,0 +1,31 @@
+
+    
+    
+    - name: Creates directory
+      ansible.builtin.file:
+        path: /usr/src/diun
+        state: directory
+        owner: ansible-c
+        group: ans-admin
+        mode: 0775
+      become_user: root
+
+
+    - name: Change the directory
+      command: cd /usr/src/diun
+
+    - name: Transfer docker-compose file
+      copy:
+        src: "{{ansible_roles_path}}/files/diun/docker-compose.yml"
+        dest: /usr/src/diun/
+        mode: 0755
+      become_user: root
+
+
+    - name: Pull the docker image
+      command: sudo /usr/local/bin/docker-compose -f /usr/src/diun/docker-compose.yml pull
+      become_user: root
+
+    - name: Build the docker image
+      command: sudo docker compose -f /usr/src/diun/docker-compose.yml up -d
+      become_user: root
